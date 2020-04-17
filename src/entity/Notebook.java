@@ -3,6 +3,13 @@ package entity;
 import java.sql.Date;
 
 public class Notebook {
+	private int id;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	private String name;
 	private Double price;
 	private Date date;

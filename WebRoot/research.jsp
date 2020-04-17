@@ -1,8 +1,7 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@page import="model.Model"%>
 <%@page import="entity.Notebook"%>
 <%@page import="dbutil.Dbconn"%>
-<%@page import="java.math.BigDecimal"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -13,7 +12,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'index.jsp' starting page</title>
+    <title>My JSP 'research.jsp' starting page</title>
+    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -22,31 +22,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+
   </head>
   
   <body>
-    <%
-    Model model=new Model();
-    List<Notebook> list=model.notebookSelect();
-	%>
-	<table border="1">         
-	<%for(int i=0;i<list.size();i++){%>
-				<tr>
-				<td><%=list.get(i).getId() %></td>
-				<td><%=list.get(i).getName() %></td>
-				<td><%=list.get(i).getPrice() %></td>
-				<td><%=list.get(i).getDate() %></td>
-				<td><%=list.get(i).getBrand() %></td>
-				<td><%=list.get(i).getConfiguration() %></td>
-				<td><%=list.get(i).getPurpose() %></td>
-				<td><%=list.get(i).getDurable() %></td>
-				<td><%=list.get(i).getLocation() %></td>
-				</tr>
-		<% 	
-		}
+	<%
+        //1、接收从input.jsp中传递过来的参数 
+    	//2、执行查询
+    	//3、显示结果
+    	int id=Integer.parseInt(request.getParameter("notebookid"));
+    	Model model=new Model();
+    	Notebook notebook=model.load(id);
+    	//根据查询数据来决定如何显示结果
+    	//查询的数据有两种结果：null，实体对象
+    	if(notebook==null){
+    		out.println("没有查询到数据");
+    	}else{
+    		out.println("电脑名："+notebook.getName());
+    	}
      %>
-
-     </table>
-
+     <br>
+     <a href="search.jsp">返回继续查询</a>
   </body>
 </html>
